@@ -1,3 +1,3 @@
 module.exports = {
-    mongoURI: 'mongodb+srv://root:1234@test.ucwj7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+    mongoURI: process.env.MONGO_URI || 'mongodb://localhost:27017/emotion'
 }

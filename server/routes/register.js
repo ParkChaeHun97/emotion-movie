@@ -7,7 +7,8 @@ const { User } = require("../models/User");
 //=================================
 
 router.post('/register', (req, res) => {
-    const user = new User(req.body);
+    const { name, email, password, lastname } = req.body;
+    const user = new User({ name, email, password, lastname });
     user.save((err, user) => {
         if (err) return res.json({
             success: false,

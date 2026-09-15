@@ -66,8 +66,8 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
 userSchema.methods.generateToken = function (cb) {
     var user = this;
 
-    // 존맛탱으로 토큰생성
-    var token = jwt.sign(user._id.toHexString(), "secretToken");
+
+    var token = jwt.sign(user._id.toHexString(), process.env.JWT_SECRET);
 
     user.token = token;
     user.save(function (err, user) {
@@ -79,7 +79,7 @@ userSchema.methods.generateToken = function (cb) {
 userSchema.statics.findByToken = function (token, cb) {
     var user = this;
     //토큰 디코딩
-    jwt.verify(token, "secretToken", function (err, decoded) {
+    jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
 
         //userId를 사용하여 클라이언트 및 DB에서 토큰 확인
         user.findOne({ _id: decoded, token: token }, function (err, user) {
